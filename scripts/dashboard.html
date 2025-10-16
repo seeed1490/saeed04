@@ -27,6 +27,14 @@
     .stats-rented { background: #c0392b; }
     .stats-maintenance { background: #f39c12; }
     .stats-total { background: #34495e; }
+    .chart-container {
+      max-width: 500px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
   </style>
 </head>
 <body>
@@ -38,6 +46,11 @@
   <!-- بطاقات الإحصائيات -->
   <div id="stats-cards" class="stats-cards"></div>
 
+  <!-- المخطط البياني -->
+  <div class="chart-container">
+    <canvas id="unitsChart"></canvas>
+  </div>
+
   <!-- روابط سريعة -->
   <div class="grid">
     <a href="units.html">🏠 الوحدات</a>
@@ -48,6 +61,9 @@
     <a href="settings.html">⚙️ الإعدادات</a>
     <a href="map.html">🗺️ الخريطة</a>
   </div>
+
+  <!-- مكتبة Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script type="module">
     import { initComponent } from './scripts/component.js';
@@ -64,6 +80,7 @@
 
       const stats = calculateUnitStats(branchUnits);
 
+      // البطاقات
       byId("stats-cards").innerHTML = `
         <div class="stats-card stats-total">
           <h2>${stats.total}</h2>
@@ -82,6 +99,26 @@
           <p>🟠 صيانة</p>
         </div>
       `;
+
+      // المخطط البياني
+      const ctx = document.getElementById("unitsChart").getContext("2d");
+      new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: ["🟢 متاحة", "🔴 مؤجرة", "🟠 صيانة"],
+          datasets: [{
+            data: [stats.available, stats.rented, stats.maintenance],
+            backgroundColor: ["#27ae60", "#c0392b", "#f39c12"]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: "bottom" },
+            title: { display: true, text: "توزيع الوحدات حسب الحالة" }
+          }
+        }
+      });
     }
 
     loadStats();
