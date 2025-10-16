@@ -5,22 +5,12 @@
   <title>الخريطة التفاعلية</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .map-container { display: flex; gap: 20px; margin-top: 20px; }
-    .map-grid {
-      display: grid;
-      grid-template-columns: repeat(10, 50px);
-      grid-template-rows: repeat(8, 50px);
-      gap: 5px;
+    .filters {
+      margin: 15px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    .unit {
-      display: flex; align-items: center; justify-content: center;
-      border: 1px solid #ccc; border-radius: 4px;
-      font-size: 14px; cursor: pointer;
-    }
-    .available { background: #c8f7c5; }   /* 🟢 متاحة */
-    .rented { background: #f7c5c5; }      /* 🔴 مؤجرة */
-    .maintenance { background: #ffe0a3; } /* 🟠 صيانة */
-    .panel { flex: 1; padding: 15px; border: 1px solid #ddd; border-radius: 6px; background: #fafafa; }
   </style>
 </head>
 <body>
@@ -28,6 +18,14 @@
 
   <!-- مكون اختيار الفرع + بيانات المستخدم -->
   <div id="component"></div>
+
+  <!-- أزرار الفلترة -->
+  <div class="filters">
+    <button id="filterAll" class="btn info">عرض الكل</button>
+    <button id="filterAvailable" class="btn primary">🟢 المتاحة</button>
+    <button id="filterRented" class="btn danger">🔴 المؤجرة</button>
+    <button id="filterMaintenance" class="btn warning">🟠 الصيانة</button>
+  </div>
 
   <div class="map-container">
     <!-- شبكة الوحدات -->
@@ -42,44 +40,19 @@
 
   <script type="module">
     import { initComponent } from './scripts/component.js';
-    import { fetchJSON, statusClass, byId } from './scripts/utils.js';
-    import { getSession } from './scripts/auth.js';
+    import { initMap, filterUnits } from './scripts/map.js';
 
     // تفعيل المكون الموحد
     initComponent("component", []);
 
-    async function initMap() {
-      const units = await fetchJSON('data/units.json');
-      const session = getSession();
-      const branchUnits = units.filter(u => u.branch === session.branch);
+    // تحميل الخريطة عند فتح الصفحة
+    window.addEventListener('DOMContentLoaded', () => initMap("map-grid", "details"));
 
-      const grid = byId('map-grid');
-      grid.innerHTML = "";
-
-      // توزيع 10×8 (80 خانة)، سيتم ملء أول 71 بوحدات F1–F71
-      for (let i = 0; i < 80; i++) {
-        const unit = branchUnits[i];
-        const cell = document.createElement('div');
-        cell.className = 'unit ' + (unit ? statusClass(unit.status) : '');
-        cell.textContent = unit ? unit.id : '';
-        if (unit) cell.onclick = () => showDetails(unit);
-        grid.appendChild(cell);
-      }
-    }
-
-    function showDetails(unit) {
-      byId('details').innerHTML = `
-        <h2>📋 تفاصيل الوحدة</h2>
-        <p><strong>رقم الوحدة:</strong> ${unit.id}</p>
-        <p><strong>الاسم:</strong> ${unit.name}</p>
-        <p><strong>الموقع:</strong> ${unit.location}</p>
-        <p><strong>الحالة:</strong> ${unit.status}</p>
-        <p><strong>المستأجر:</strong> ${unit.tenant || "لا يوجد"}</p>
-        <p><strong>الفرع:</strong> ${unit.branch || "-"}</p>
-      `;
-    }
-
-    window.addEventListener('DOMContentLoaded', initMap);
+    // أزرار الفلترة
+    document.getElementById("filterAll").onclick = () => filterUnits("map-grid", "details", "الكل");
+    document.getElementById("filterAvailable").onclick = () => filterUnits("map-grid", "details", "متاحة");
+    document.getElementById("filterRented").onclick = () => filterUnits("map-grid", "details", "مؤجرة");
+    document.getElementById("filterMaintenance").onclick = () => filterUnits("map-grid", "details", "صيانة");
   </script>
 </body>
 </html>
