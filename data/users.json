@@ -1,0 +1,38 @@
+[
+  {
+    "id": "U001",
+    "username": "admin",
+    "password": "1234", 
+    "role": "مدير",
+    "branch": "BR001",
+    "fullName": "مدير النظام",
+    "email": "admin@example.com"
+  },
+  {
+    "id": "U002",
+    "username": "employee1",
+    "password": "1234",
+    "role": "موظف",
+    "branch": "BR001",
+    "fullName": "موظف فرع جدة",
+    "email": "emp1@example.com"
+  },
+  {
+    "id": "U003",
+    "username": "employee2",
+    "password": "1234",
+    "role": "موظف",
+    "branch": "BR002",
+    "fullName": "موظف فرع مكة",
+    "email": "emp2@example.com"
+  },
+  {
+    "id": "U004",
+    "username": "viewer1",
+    "password": "1234",
+    "role": "مشاهد",
+    "branch": "BR002",
+    "fullName": "مشاهد البيانات",
+    "email": "viewer@example.com"
+  }
+]
