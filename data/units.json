@@ -1,0 +1,15 @@
+[
+  { "id": "F1",  "name": "شقة 101", "location": "الدور الأول", "status": "متاحة",  "tenant": "", "branch": "BR001" },
+  { "id": "F2",  "name": "شقة 102", "location": "الدور الأول", "status": "مؤجرة", "tenant": "أحمد علي", "branch": "BR001" },
+  { "id": "F3",  "name": "شقة 103", "location": "الدور الأول", "status": "صيانة", "tenant": "", "branch": "BR001" },
+  { "id": "F4",  "name": "شقة 104", "location": "الدور الأول", "status": "متاحة",  "tenant": "", "branch": "BR001" },
+  { "id": "F5",  "name": "شقة 201", "location": "الدور الثاني", "status": "مؤجرة", "tenant": "محمد سعيد", "branch": "BR001" },
+  { "id": "F6",  "name": "شقة 202", "location": "الدور الثاني", "status": "متاحة",  "tenant": "", "branch": "BR001" },
+  { "id": "F7",  "name": "شقة 203", "location": "الدور الثاني", "status": "صيانة", "tenant": "", "branch": "BR001" },
+  { "id": "F8",  "name": "شقة 204", "location": "الدور الثاني", "status": "مؤجرة", "tenant": "سارة خالد", "branch": "BR001" },
+
+  { "id": "F9",  "name": "شقة 301", "location": "الدور الثالث", "status": "متاحة",  "tenant": "", "branch": "BR002" },
+  { "id": "F10", "name": "شقة 302", "location": "الدور الثالث", "status": "مؤجرة", "tenant": "خالد منصور", "branch": "BR002" },
+  { "id": "F11", "name": "شقة 303", "location": "الدور الثالث", "status": "متاحة",  "tenant": "", "branch": "BR002" },
+  { "id": "F12", "name": "شقة 304", "location": "الدور الثالث", "status": "صيانة", "tenant": "", "branch": "BR002" }
+]
