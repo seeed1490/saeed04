@@ -1,10 +1,65 @@
 {
-  "BR001": {
-    "10": { "revenue": 12000, "arrears": 3000, "occupancy": 85 },
-    "09": { "revenue": 10000, "arrears": 2500, "occupancy": 80 }
+  "summary": {
+    "totalUnits": 12,
+    "availableUnits": 4,
+    "rentedUnits": 5,
+    "maintenanceUnits": 3,
+    "totalContracts": 4,
+    "activeContracts": 3,
+    "expiredContracts": 1
   },
-  "BR002": {
-    "10": { "revenue": 8000, "arrears": 1500, "occupancy": 70 },
-    "09": { "revenue": 9500, "arrears": 2000, "occupancy": 75 }
-  }
+  "revenues": [
+    {
+      "month": "2024-07",
+      "expected": 11500,
+      "collected": 11000,
+      "branch": "BR001"
+    },
+    {
+      "month": "2024-08",
+      "expected": 11500,
+      "collected": 11500,
+      "branch": "BR001"
+    },
+    {
+      "month": "2024-09",
+      "expected": 6200,
+      "collected": 6000,
+      "branch": "BR002"
+    }
+  ],
+  "arrears": [
+    {
+      "contractId": "C001",
+      "tenant": "أحمد علي",
+      "unitId": "F2",
+      "dueAmount": 500,
+      "branch": "BR001"
+    },
+    {
+      "contractId": "C004",
+      "tenant": "خالد منصور",
+      "unitId": "F10",
+      "dueAmount": 200,
+      "branch": "BR002"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "M002",
+      "unitId": "F7",
+      "issue": "عطل في المكيف",
+      "cost": 350,
+      "date": "2024-10-01",
+      "branch": "BR001"
+    },
+    {
+      "id": "M003",
+      "unitId": "F12",
+      "issue": "إصلاح باب الشقة",
+      "cost": 200,
+      "date": "2024-08-20",
+      "branch": "BR002"
+    }
+  ]
 }
