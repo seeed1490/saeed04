@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>التقارير المالية</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>📊 التقارير المالية</h1>
+
+  <!-- مكون اختيار الفرع + بيانات المستخدم -->
+  <div id="component"></div>
+
+  <!-- فلاتر -->
+  <section class="filters panel" style="max-width:600px; margin:auto;">
+    <label>اختر الشهر:</label>
+    <select id="monthSelect">
+      <option value="01">يناير</option>
+      <option value="02">فبراير</option>
+      <option value="03">مارس</option>
+      <option value="04">أبريل</option>
+      <option value="05">مايو</option>
+      <option value="06">يونيو</option>
+      <option value="07">يوليو</option>
+      <option value="08">أغسطس</option>
+      <option value="09">سبتمبر</option>
+      <option value="10">أكتوبر</option>
+      <option value="11">نوفمبر</option>
+      <option value="12">ديسمبر</option>
+    </select>
+    <button id="filterBtn" class="btn info">🔍 عرض التقرير</button>
+    <button id="printBtn" class="btn primary">🖨️ طباعة التقرير</button>
+  </section>
+
+  <!-- نتائج التقرير -->
+  <section id="report-results" class="panel" style="margin-top:20px;">
+    <p>اختر شهرًا لعرض التقرير.</p>
+  </section>
+
+  <script type="module">
+    import { initComponent } from './scripts/component.js';
+    import { fetchJSON } from './scripts/utils.js';
+    import { getSession } from './scripts/auth.js';
+    import { guardButton } from './scripts/permissions.js';
+
+    // تفعيل المكون الموحد
+    initComponent("component", [
+      { selector: "#printBtn", section: "تقارير", action: "طباعة" }
+    ]);
+
+    const session = getSession();
+
+    async function loadReport(month) {
+      const data = await fetchJSON('data/reports-data.json');
+      const branchData = data[session.branch] || {};
+      const report = branchData[month];
+
+      const container = document.getElementById("report-results");
+      if (!report) {
+        container.innerHTML = `<p>⚠️ لا توجد بيانات لهذا الشهر.</p>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <h2>📅 تقرير شهر ${month}</h2>
+        <p><strong>إجمالي الإيرادات:</strong> ${report.revenue.toLocaleString()} ريال</p>
+        <p><strong>المتأخرات:</strong> ${report.arrears.toLocaleString()} ريال</p>
+        <p><strong>نسبة الإشغال:</strong> ${report.occupancy}%</p>
+      `;
+    }
+
+    document.getElementById("filterBtn").addEventListener("click", () => {
+      const month = document.getElementById("monthSelect").value;
+      loadReport(month);
+    });
+
+    document.getElementById("printBtn").addEventListener("click", () => {
+      window.print();
+    });
+  </script>
+</body>
+</html>
