@@ -1,0 +1,29 @@
+{
+  "مدير": {
+    "units": ["view", "add", "edit", "delete"],
+    "contracts": ["view", "add", "edit", "delete"],
+    "tenants": ["view", "add", "edit", "delete"],
+    "maintenance": ["view", "add", "edit", "delete"],
+    "reports": ["view", "export"],
+    "settings": ["view", "edit"],
+    "users": ["view", "add", "edit", "delete"]
+  },
+  "موظف": {
+    "units": ["view"],
+    "contracts": ["view", "add", "edit"],
+    "tenants": ["view", "add", "edit"],
+    "maintenance": ["view", "add", "edit"],
+    "reports": ["view"],
+    "settings": [],
+    "users": []
+  },
+  "مشاهد": {
+    "units": ["view"],
+    "contracts": ["view"],
+    "tenants": ["view"],
+    "maintenance": ["view"],
+    "reports": ["view"],
+    "settings": [],
+    "users": []
+  }
+}
