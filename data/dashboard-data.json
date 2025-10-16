@@ -1,0 +1,54 @@
+{
+  "summary": {
+    "totalUnits": 12,
+    "availableUnits": 4,
+    "rentedUnits": 5,
+    "maintenanceUnits": 3,
+    "totalContracts": 4,
+    "activeContracts": 3,
+    "expiredContracts": 1,
+    "totalTenants": 4
+  },
+  "financials": {
+    "monthlyExpected": 12800,
+    "monthlyCollected": 12500,
+    "arrears": 700,
+    "expenses": 550
+  },
+  "recentActivities": [
+    {
+      "date": "2024-10-01",
+      "type": "عقد جديد",
+      "details": "إضافة عقد للمستأجر محمد سعيد في الوحدة F5",
+      "branch": "BR001"
+    },
+    {
+      "date": "2024-09-15",
+      "type": "طلب صيانة",
+      "details": "تسريب مياه في الوحدة F3",
+      "branch": "BR001"
+    },
+    {
+      "date": "2024-09-10",
+      "type": "تجديد عقد",
+      "details": "تجديد عقد المستأجر خالد منصور في الوحدة F10",
+      "branch": "BR002"
+    }
+  ],
+  "branches": [
+    {
+      "id": "BR001",
+      "name": "الفرع الرئيسي - جدة",
+      "units": 8,
+      "contracts": 3,
+      "revenues": 11500
+    },
+    {
+      "id": "BR002",
+      "name": "فرع مكة",
+      "units": 4,
+      "contracts": 1,
+      "revenues": 6200
+    }
+  ]
+}
