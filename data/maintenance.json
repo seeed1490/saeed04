@@ -1,0 +1,42 @@
+[
+  {
+    "id": "M001",
+    "unitId": "F3",
+    "issue": "تسريب مياه في الحمام",
+    "requestDate": "2024-09-15",
+    "status": "مفتوح",
+    "assignedTo": "شركة الصيانة السريعة",
+    "cost": 0,
+    "branch": "BR001"
+  },
+  {
+    "id": "M002",
+    "unitId": "F7",
+    "issue": "عطل في المكيف",
+    "requestDate": "2024-10-01",
+    "status": "قيد التنفيذ",
+    "assignedTo": "فني تكييف - علي حسن",
+    "cost": 350,
+    "branch": "BR001"
+  },
+  {
+    "id": "M003",
+    "unitId": "F12",
+    "issue": "إصلاح باب الشقة",
+    "requestDate": "2024-08-20",
+    "status": "مكتمل",
+    "assignedTo": "ورشة النجارة المتحدة",
+    "cost": 200,
+    "branch": "BR002"
+  },
+  {
+    "id": "M004",
+    "unitId": "F10",
+    "issue": "تغيير سخان المياه",
+    "requestDate": "2024-07-05",
+    "status": "ملغي",
+    "assignedTo": "",
+    "cost": 0,
+    "branch": "BR002"
+  }
+]
