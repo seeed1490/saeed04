@@ -1,0 +1,34 @@
+[
+  {
+    "id": "T001",
+    "name": "أحمد علي",
+    "phone": "0501234567",
+    "email": "ahmed@example.com",
+    "contracts": ["C001"],
+    "branch": "BR001"
+  },
+  {
+    "id": "T002",
+    "name": "محمد سعيد",
+    "phone": "0502345678",
+    "email": "mohammed@example.com",
+    "contracts": ["C002"],
+    "branch": "BR001"
+  },
+  {
+    "id": "T003",
+    "name": "سارة خالد",
+    "phone": "0503456789",
+    "email": "sara@example.com",
+    "contracts": ["C003"],
+    "branch": "BR001"
+  },
+  {
+    "id": "T004",
+    "name": "خالد منصور",
+    "phone": "0504567890",
+    "email": "khaled@example.com",
+    "contracts": ["C004"],
+    "branch": "BR002"
+  }
+]
