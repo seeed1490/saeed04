@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>المستأجرين</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>👥 إدارة المستأجرين</h1>
+
+  <!-- مكون اختيار الفرع + بيانات المستخدم -->
+  <div id="component"></div>
+
+  <table id="tenants-table">
+    <thead>
+      <tr>
+        <th>رقم المستأجر</th>
+        <th>الاسم</th>
+        <th>رقم الجوال</th>
+        <th>البريد الإلكتروني</th>
+        <th>الوحدة</th>
+        <th>العقد</th>
+        <th>الفرع</th>
+        <th>الإجراءات</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="actions" style="text-align:center;">
+    <a href="add-tenant.html" class="btn primary">➕ إضافة مستأجر جديد</a>
+  </div>
+
+  <script type="module">
+    import { initComponent } from './scripts/component.js';
+    import { fetchJSON } from './scripts/utils.js';
+    import { getSession } from './scripts/auth.js';
+    import { guardButton } from './scripts/permissions.js';
+
+    // تفعيل المكون الموحد (اختيار الفرع + الصلاحيات)
+    initComponent
