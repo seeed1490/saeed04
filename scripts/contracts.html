@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>العقود</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>📑 إدارة العقود</h1>
+
+  <!-- مكون اختيار الفرع + بيانات المستخدم -->
+  <div id="component"></div>
+
+  <table id="contracts-table">
+    <thead>
+      <tr>
+        <th>رقم العقد</th>
+        <th>الوحدة</th>
+        <th>المستأجر</th>
+        <th>تاريخ البداية</th>
+        <th>تاريخ النهاية</th>
+        <th>القيمة</th>
+        <th>الحالة</th>
+        <th>الإجراءات</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="actions" style="text-align:center;">
+    <a href="add-contract.html" class="btn primary">➕ إضافة عقد جديد</a>
+    <a href="expired-contracts.html" class="btn info">📂 أرشيف العقود المنتهية</a>
+  </div>
+
+  <script type="module">
+    import { initComponent } from './scripts/component.js';
+    import { fetchJSON } from './scripts/utils.js';
+    import { getSession } from './scripts/auth.js';
+    import { guardButton } from './scripts/permissions.js';
+
+    // تفعيل المكون الموحد (اختيار الفرع + الصلاحيات)
+    initComponent("component", [
+      { selector: ".btn.primary", section: "عقود", action: "إضافة" }
+    ]);
+
+    const session = getSession();
+
+    async function loadContracts() {
+      const contracts = await fetchJSON('data/contracts.json');
+      const tenants = await fetchJSON('data/tenants.json');
+      const units = await fetchJSON('data/units.json');
+
+      // فلترة العقود حسب الفرع والحالة
+      const branchContracts = contracts.filter(c => c.branch === session.branch && c.status === "ساري");
+
+      const tbody = document.querySelector('#contracts-table tbody');
+      tbody.innerHTML = branchContracts.map(c => {
+        const tenant = tenants.find(t => t.id === c.tenantId);
+        const unit = units.find(u => u.id === c.unitId);
+        return `
+          <tr>
+            <td>${c.id}</td>
+            <td>${unit ? unit.name : c.unitId}</td>
+            <td>${tenant ? tenant.name : c.tenantId}</td>
+            <td>${c.startDate}</td>
+            <td>${c.endDate}</td>
+            <td>${c.amount.toLocaleString()} ريال</td>
+            <td>${c.status}</td>
+            <td>
+              <a href="contract-details.html?contract=${c.id}" class="btn info">عرض</a>
+              <button class="btn warning">تعديل</button>
+              <button class="btn danger">حذف</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // تطبيق الصلاحيات على الأزرار
+      setTimeout(() => {
+        document.querySelectorAll('.btn.warning').forEach(btn =>
+          guardButton(btn, session.role, 'عقود', 'تعديل')
+        );
+        document.querySelectorAll('.btn.danger').forEach(btn =>
+          guardButton(btn, session.role, 'عقود', 'حذف')
+        );
+      }, 500);
+    }
+
+    loadContracts();
+  </script>
+</body>
+</html>
