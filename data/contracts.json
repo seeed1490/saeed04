@@ -1,0 +1,42 @@
+[
+  {
+    "id": "C001",
+    "unitId": "F2",
+    "tenant": "أحمد علي",
+    "startDate": "2024-01-01",
+    "endDate": "2024-12-31",
+    "amount": 2500,
+    "status": "ساري",
+    "branch": "BR001"
+  },
+  {
+    "id": "C002",
+    "unitId": "F5",
+    "tenant": "محمد سعيد",
+    "startDate": "2024-03-01",
+    "endDate": "2025-02-28",
+    "amount": 3000,
+    "status": "ساري",
+    "branch": "BR001"
+  },
+  {
+    "id": "C003",
+    "unitId": "F8",
+    "tenant": "سارة خالد",
+    "startDate": "2023-05-01",
+    "endDate": "2024-04-30",
+    "amount": 2800,
+    "status": "منتهي",
+    "branch": "BR001"
+  },
+  {
+    "id": "C004",
+    "unitId": "F10",
+    "tenant": "خالد منصور",
+    "startDate": "2024-06-01",
+    "endDate": "2025-05-31",
+    "amount": 3200,
+    "status": "ساري",
+    "branch": "BR002"
+  }
+]
