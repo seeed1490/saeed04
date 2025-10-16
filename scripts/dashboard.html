@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة التحكم</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>📊 لوحة التحكم الرئيسية</h1>
+
+  <!-- مكون اختيار الفرع + بيانات المستخدم -->
+  <div id="component"></div>
+
+  <!-- الإحصائيات -->
+  <section class="stats">
+    <div class="card">🏢 عدد الوحدات: <strong>—</strong></div>
+    <div class="card">📄 العقود السارية: <strong>—</strong></div>
+    <div class="card">👥 عدد المستأجرين: <strong>—</strong></div>
+    <div class="card">💰 إيرادات الشهر: <strong>—</strong></div>
+    <div class="card">⏰ المتأخرات: <strong>—</strong></div>
+  </section>
+
+  <!-- الاختصارات -->
+  <section class="shortcuts">
+    <h2>🚀 اختصارات سريعة</h2>
+    <div class="grid"></div>
+  </section>
+
+  <!-- التنبيهات -->
+  <section class="alerts">
+    <h2>⚠️ التنبيهات</h2>
+    <ul></ul>
+  </section>
+
+  <script type="module">
+    import { initComponent } from './scripts/component.js';
+    import { fetchJSON } from './scripts/utils.js';
+    import { getSession } from './scripts/auth.js';
+
+    // تفعيل المكون الموحد (اختيار الفرع + الصلاحيات)
+    initComponent("component", []);
+
+    // تحميل بيانات لوحة التحكم
+    const session = getSession();
+    fetchJSON('data/dashboard-data.json').then(data => {
+      const s = data.stats;
+      document.querySelector('.stats').innerHTML = `
+        <div class="card">🏢 عدد الوحدات: <strong>${s.units}</strong></div>
+        <div class="card">📄 العقود السارية: <strong>${s.activeContracts}</strong></div>
+        <div class="card">👥 عدد المستأجرين: <strong>${s.tenants}</strong></div>
+        <div class="card">💰 إيرادات الشهر: <strong>${s.monthlyRevenue.toLocaleString()} ريال</strong></div>
+        <div class="card">⏰ المتأخرات: <strong>${s.arrears.toLocaleString()} ريال</strong></div>
+      `;
+
+      document.querySelector('.shortcuts .grid').innerHTML =
+        data.shortcuts.map(s => `<a href="${s.link}" class="shortcut">${s.icon} ${s.label}</a>`).join('');
+
+      document.querySelector('.alerts ul').innerHTML =
+        data.alerts.map(a => `<li>${a}</li>`).join('');
+    });
+  </script>
+</body>
+</html>
