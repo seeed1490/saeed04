@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>إعدادات النظام</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>⚙️ إعدادات النظام</h1>
+
+  <!-- مكون اختيار الفرع + بيانات المستخدم -->
+  <div id="component"></div>
+
+  <section class="panel">
+    <h2>👥 إدارة المستخدمين</h2>
+    <button id="manageUsersBtn" class="btn primary">إدارة المستخدمين</button>
+  </section>
+
+  <section class="panel">
+    <h2>🛡️ إدارة الأدوار والصلاحيات</h2>
+    <button id="manageRolesBtn" class="btn primary">إدارة الأدوار</button>
+  </section>
+
+  <section class="panel">
+    <h2>🏢 إدارة الفروع</h2>
+    <button id="manageBranchesBtn" class="btn primary">إدارة الفروع</button>
+  </section>
+
+  <section class="panel">
+    <h2>🌐 اللغة</h2>
+    <select id="languageSelect">
+      <option value="ar">العربية</option>
+      <option value="en">English</option>
+    </select>
+  </section>
+
+  <section class="panel">
+    <h2>🔔 التنبيهات</h2>
+    <label><input type="checkbox" id="notifyContracts" checked> تنبيهات العقود</label><br>
+    <label><input type="checkbox" id="notifyPayments" checked> تنبيهات الدفعات</label><br>
+    <label><input type="checkbox" id="notifyMaintenance"> تنبيهات الصيانة</label>
+  </section>
+
+  <section class="panel">
+    <h2>💳 الفوترة الإلكترونية (ZATCA)</h2>
+    <label>API Key:</label>
+    <input type="text" id="zatcaKey" placeholder="أدخل مفتاح الربط"><br><br>
+    <button id="saveZatcaBtn" class="btn primary">💾 حفظ الإعدادات</button>
+  </section>
+
+  <script type="module">
+    import { initComponent } from './scripts/component.js';
+    import { getSession } from './scripts/auth.js';
+    import { guardButton } from './scripts/permissions.js';
+
+    // تفعيل المكون الموحد
+    initComponent("component", []);
+
+    const session = getSession();
+
+    // تطبيق الصلاحيات على الأزرار
+    guardButton(document.getElementById("manageUsersBtn"), session.role, "إعدادات", "مستخدمين");
+    guardButton(document.getElementById("manageRolesBtn"), session.role, "إعدادات", "أدوار");
+    guardButton(document.getElementById("manageBranchesBtn"), session.role, "إعدادات", "فروع");
+    guardButton(document.getElementById("saveZatcaBtn"), session.role, "إعدادات", "فوترة");
+
+    // تغيير اللغة (محاكاة)
+    document.getElementById("languageSelect").addEventListener("change", e => {
+      alert("✅ تم تغيير اللغة إلى: " + e.target.value);
+    });
+
+    // حفظ إعدادات ZATCA (محاكاة)
+    document.getElementById("saveZatcaBtn").addEventListener("click", () => {
+      const key = document.getElementById("zatcaKey").value;
+      if (key) {
+        alert("✅ تم حفظ مفتاح ZATCA بنجاح!");
+      } else {
+        alert("⚠️ الرجاء إدخال مفتاح ZATCA.");
+      }
+    });
+  </script>
+</body>
+</html>
