@@ -1,0 +1,10 @@
+{
+  "BR001": {
+    "10": { "revenue": 12000, "arrears": 3000, "occupancy": 85 },
+    "09": { "revenue": 10000, "arrears": 2500, "occupancy": 80 }
+  },
+  "BR002": {
+    "10": { "revenue": 8000, "arrears": 1500, "occupancy": 70 },
+    "09": { "revenue": 9500, "arrears": 2000, "occupancy": 75 }
+  }
+}
