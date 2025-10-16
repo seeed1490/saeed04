@@ -4,60 +4,87 @@
   <meta charset="UTF-8">
   <title>لوحة التحكم</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .stats-card {
+      padding: 20px;
+      border-radius: 8px;
+      color: #fff;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .stats-card h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+    .stats-available { background: #27ae60; }
+    .stats-rented { background: #c0392b; }
+    .stats-maintenance { background: #f39c12; }
+    .stats-total { background: #34495e; }
+  </style>
 </head>
 <body>
-  <h1>📊 لوحة التحكم الرئيسية</h1>
+  <h1>📊 لوحة التحكم</h1>
 
   <!-- مكون اختيار الفرع + بيانات المستخدم -->
   <div id="component"></div>
 
-  <!-- الإحصائيات -->
-  <section class="stats">
-    <div class="card">🏢 عدد الوحدات: <strong>—</strong></div>
-    <div class="card">📄 العقود السارية: <strong>—</strong></div>
-    <div class="card">👥 عدد المستأجرين: <strong>—</strong></div>
-    <div class="card">💰 إيرادات الشهر: <strong>—</strong></div>
-    <div class="card">⏰ المتأخرات: <strong>—</strong></div>
-  </section>
+  <!-- بطاقات الإحصائيات -->
+  <div id="stats-cards" class="stats-cards"></div>
 
-  <!-- الاختصارات -->
-  <section class="shortcuts">
-    <h2>🚀 اختصارات سريعة</h2>
-    <div class="grid"></div>
-  </section>
-
-  <!-- التنبيهات -->
-  <section class="alerts">
-    <h2>⚠️ التنبيهات</h2>
-    <ul></ul>
-  </section>
+  <!-- روابط سريعة -->
+  <div class="grid">
+    <a href="units.html">🏠 الوحدات</a>
+    <a href="contracts.html">📑 العقود</a>
+    <a href="tenants.html">👥 المستأجرين</a>
+    <a href="maintenance.html">🛠️ الصيانة</a>
+    <a href="reports.html">📊 التقارير</a>
+    <a href="settings.html">⚙️ الإعدادات</a>
+    <a href="map.html">🗺️ الخريطة</a>
+  </div>
 
   <script type="module">
     import { initComponent } from './scripts/component.js';
-    import { fetchJSON } from './scripts/utils.js';
+    import { fetchJSON, calculateUnitStats, byId } from './scripts/utils.js';
     import { getSession } from './scripts/auth.js';
 
-    // تفعيل المكون الموحد (اختيار الفرع + الصلاحيات)
+    // تفعيل المكون الموحد
     initComponent("component", []);
 
-    // تحميل بيانات لوحة التحكم
-    const session = getSession();
-    fetchJSON('data/dashboard-data.json').then(data => {
-      const s = data.stats;
-      document.querySelector('.stats').innerHTML = `
-        <div class="card">🏢 عدد الوحدات: <strong>${s.units}</strong></div>
-        <div class="card">📄 العقود السارية: <strong>${s.activeContracts}</strong></div>
-        <div class="card">👥 عدد المستأجرين: <strong>${s.tenants}</strong></div>
-        <div class="card">💰 إيرادات الشهر: <strong>${s.monthlyRevenue.toLocaleString()} ريال</strong></div>
-        <div class="card">⏰ المتأخرات: <strong>${s.arrears.toLocaleString()} ريال</strong></div>
+    async function loadStats() {
+      const units = await fetchJSON("data/units.json");
+      const session = getSession();
+      const branchUnits = units.filter(u => u.branch === session.branch);
+
+      const stats = calculateUnitStats(branchUnits);
+
+      byId("stats-cards").innerHTML = `
+        <div class="stats-card stats-total">
+          <h2>${stats.total}</h2>
+          <p>إجمالي الوحدات</p>
+        </div>
+        <div class="stats-card stats-available">
+          <h2>${stats.available}</h2>
+          <p>🟢 متاحة</p>
+        </div>
+        <div class="stats-card stats-rented">
+          <h2>${stats.rented}</h2>
+          <p>🔴 مؤجرة</p>
+        </div>
+        <div class="stats-card stats-maintenance">
+          <h2>${stats.maintenance}</h2>
+          <p>🟠 صيانة</p>
+        </div>
       `;
+    }
 
-      document.querySelector('.shortcuts .grid').innerHTML =
-        data.shortcuts.map(s => `<a href="${s.link}" class="shortcut">${s.icon} ${s.label}</a>`).join('');
-
-      document.querySelector('.alerts ul').innerHTML =
-        data.alerts.map(a => `<li>${a}</li>`).join('');
-    });
+    loadStats();
   </script>
 </body>
 </html>
